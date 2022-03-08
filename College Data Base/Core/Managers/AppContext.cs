@@ -32,10 +32,12 @@ public class AppContext : DbContext
                                       .HasForeignKey(s => s.GroupID)
                                       .OnDelete(DeleteBehavior.SetNull);
 
-        modelBuilder.Entity<Teacher>();
+        modelBuilder.Entity<Teacher>().HasOne(t => t.SupervisedGroup)
+                                      .WithOne(g => g.Curator);
 
         modelBuilder.Entity<Group>().HasOne(g => g.Curator)
                                     .WithOne(c => c.SupervisedGroup)
+                                    .HasForeignKey<Teacher>(t => t.GroupID)
                                     .OnDelete(DeleteBehavior.SetNull);
     }
 }

@@ -6,9 +6,28 @@ using System.Linq;
 
 public static class DataManager
 {
+    public static Teacher SelectCuratorByGroup(Group group)
+    {
+        ObservableCollection<Teacher> collection;
+
+        using (AppContext db = new())
+        {
+            collection = new(db.Teachers);
+        }
+
+        var curator = (from c in collection where c.ID == @group.CuratorID select c).FirstOrDefault();
+
+        return curator!;
+    }
+
     public static ObservableCollection<Teacher> SelectTeachersByDiscipline(Discipline discipline)
     {
-        var collection = GetCollection<Teacher>();
+        ObservableCollection<Teacher> collection;
+
+        using (AppContext db = new())
+        {
+            collection = new(db.Teachers);
+        }
 
         var teachers = from t in collection where t.DisciplineID == discipline.ID select t;
 
@@ -17,7 +36,12 @@ public static class DataManager
 
     public static ObservableCollection<Teacher> SelectAvailableCurators()
     {
-        var collection = GetCollection<Teacher>();
+        ObservableCollection<Teacher> collection;
+
+        using (AppContext db = new())
+        {
+            collection = new(db.Teachers);
+        }
 
         var curators = from c in collection where c.SupervisedGroup is null select c;
 
@@ -26,7 +50,12 @@ public static class DataManager
 
     public static Group SelectGroupByID(int? id)
     {
-        var collection = GetCollection<Group>();
+        ObservableCollection<Group> collection;
+
+        using (AppContext db = new())
+        {
+            collection = new(db.Groups);
+        }
 
         var group = (from g in collection where g.ID == id select g).FirstOrDefault();
 
@@ -35,17 +64,16 @@ public static class DataManager
 
     public static ObservableCollection<Student> SelectStudentsByGroup(Group group)
     {
-        var collection = GetCollection<Student>();
+        ObservableCollection<Student> collection;
+
+        using (AppContext db = new())
+        {
+            collection = new(db.Students);
+        }
 
         var students = from s in collection where s.GroupID == @group.ID select s;
 
         return new ObservableCollection<Student>(students);
-
-        /*
-         * Можно конечно так:
-         * public static ObservableCollection<Student> SelectStudentsByID(int id) => new(from s in GetCollection<Student>() where s.GroupID == id select s);
-         * но пожалуй не буду
-         */
     }
 
     public static void UpdateEntity<T>(Entity entity)
@@ -122,10 +150,14 @@ public static class DataManager
                 collection = new ObservableCollection<Discipline>(db.Disciplines);
 
             else if (typeof(T) == typeof(Group))
+            {
                 collection = new ObservableCollection<Group>(db.Groups);
+                foreach (Group group in collection)
+                    group.Curator = SelectCuratorByGroup(group);
+            }
 
             else if (typeof(T) == typeof(Teacher))
-                collection = new ObservableCollection<Teacher>(db.Teachers);
+                collection = new ObservableCollection<Teacher>(db.Teachers);            
         }
 
         return collection!;

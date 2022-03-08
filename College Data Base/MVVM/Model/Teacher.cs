@@ -20,5 +20,6 @@ public class Teacher : Entity
     public int? DisciplineID { get; set; }
     public Discipline? Discipline { get; set; }
 
+    public int? GroupID { get; set; }
     public Group? SupervisedGroup { get; set; }
 }

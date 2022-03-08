@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Student : Entity
 {
     [NotMapped]
-    public string FullName => $"{MiddleName} {FirstName[0]}. {LastName[0]}.";
+    public string FullName { get => $"{MiddleName} {FirstName[0]}. {LastName[0]}."; }
 
     public string FirstName { get; set; } = "null";
     public string MiddleName { get; set; } = "null";

@@ -23,6 +23,7 @@ public class GroupsViewModel : ViewModel
         SaveCommand = new(o =>
         {
             DataManager.UpdateEntity<Group>(SelectedGroup!);
+
             SelectedGroup = null;
 
         }, b => IsInputEnabled);
@@ -50,7 +51,7 @@ public class GroupsViewModel : ViewModel
             _selectedGroup = value;
 
             if (value is not null)
-                _selectedGroup!.Students = DataManager.SelectStudentsByGroup(value);
+                _selectedGroup!.Students = DataManager.SelectStudentsByGroup(value);            
 
             IsInputEnabled = value is not null;
 

@@ -48,9 +48,6 @@ public class TeachersViewModel : ViewModel
         {
             _selectedTeacher = value;
 
-            if (value is not null)
-                _selectedTeacher!.SupervisedGroup = DataManager.SelectGroupByID(SelectedTeacher!.ID);
-
             IsInputEnabled = value is not null;
 
             OnPropertyChanged();

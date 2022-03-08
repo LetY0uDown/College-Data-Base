@@ -86,6 +86,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        
                         <Button Content="Сохранить" 
                                 Command="{Binding SaveCommand}"
                                 Style="{StaticResource SaveButtonStyle}"/>
