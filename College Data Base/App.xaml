@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="Styles/PropertyTextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/OfflineModeButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/WarningWindowExitButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/OKButtonStyle.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

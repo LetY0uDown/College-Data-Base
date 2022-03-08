@@ -3,16 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:College_Data_Base"
         mc:Ignorable="d"
         Title="WarningWindow" Height="150" Width="300"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" WindowStyle="None"
         Background="Transparent" AllowsTransparency="True">
-    <Border CornerRadius="0 0 10 10"
-            Background="White"
+    <Border Background="White"
             BorderBrush="#FFFF3030"
-            BorderThickness="3">
+            BorderThickness="2">
 
         <Grid>
 
@@ -39,9 +37,17 @@
             </Grid>
             
             <TextBlock x:Name="TextTB" Grid.Row="1"
-                       VerticalAlignment="Center"
+                       Margin="2 2 0 0"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
                        FontSize="18" FontWeight="Medium"
-                       TextAlignment="Center" TextWrapping="Wrap"/>
+                       TextAlignment="Left" TextWrapping="Wrap"/>
+
+            <Button Grid.Row="1" Content="ОК"
+                    Height="26" Width="70"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Click="Button_Click"
+                    Style="{StaticResource OKButtonStyle}"/>
+
         </Grid>
         
     </Border>

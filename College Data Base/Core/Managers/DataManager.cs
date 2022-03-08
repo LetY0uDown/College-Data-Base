@@ -1,4 +1,4 @@
-﻿namespace College_Data_Base.Core;
+﻿namespace College_Data_Base.Core.Managers;
 
 using College_Data_Base.MVVM.Model;
 using System.Collections.ObjectModel;
@@ -6,11 +6,20 @@ using System.Linq;
 
 public static class DataManager
 {
+    public static ObservableCollection<Teacher> SelectTeachersByDiscipline(Discipline discipline)
+    {
+        var collection = GetCollection<Teacher>();
+
+        var teachers = from t in collection where t.DisciplineID == discipline.ID select t;
+
+        return new ObservableCollection<Teacher>(teachers);
+    }
+
     public static ObservableCollection<Teacher> SelectAvailableCurators()
     {
-        var collection = GetCollection<Group>();
+        var collection = GetCollection<Teacher>();
 
-        var curators = from g in collection where g.Curator?.ID is null select g.Curator;
+        var curators = from c in collection where c.SupervisedGroup is null select c;
 
         return new ObservableCollection<Teacher>(curators);
     }
@@ -24,11 +33,11 @@ public static class DataManager
         return group!;
     }
 
-    public static ObservableCollection<Student> SelectStudentsByGroup(int id)
+    public static ObservableCollection<Student> SelectStudentsByGroup(Group group)
     {
         var collection = GetCollection<Student>();
 
-        var students = from s in collection where s.GroupID == id select s;
+        var students = from s in collection where s.GroupID == @group.ID select s;
 
         return new ObservableCollection<Student>(students);
 
@@ -38,6 +47,7 @@ public static class DataManager
          * но пожалуй не буду
          */
     }
+
     public static void UpdateEntity<T>(Entity entity)
     {
         using AppContext db = new();

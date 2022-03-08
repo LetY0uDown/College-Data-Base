@@ -5,7 +5,7 @@ using College_Data_Base.MVVM.Views;
 using System.Windows;
 using System.Windows.Controls;
 
-public class MainViewModel : ViewModel
+public class MainViewModel : ObservableObject
 {
     public MainViewModel()
     {
@@ -33,12 +33,12 @@ public class MainViewModel : ViewModel
     public Command ViewGroupsCommand { get; init; }
     public Command ViewGradebookCommand { get; init; }
 
-        #region Region: App State Commands
+    #region Region: App State Commands
     public Command ExitCommand { get; init; } = new(o =>
         Application.Current.Shutdown());
 
     public Command MaximizeCommand { get; init; } = new(o =>
-        Application.Current.MainWindow.WindowState = 
+        Application.Current.MainWindow.WindowState =
             Application.Current.MainWindow.WindowState == WindowState.Normal ?
                 WindowState.Maximized : WindowState.Normal);
 

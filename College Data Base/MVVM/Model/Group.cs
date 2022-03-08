@@ -8,7 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Group : Entity
 {
     public string Title { get; set; } = "null";
-        
+
+    public int? CuratorID { get; set; }
     public Teacher? Curator { get; set; }
 
     public ObservableCollection<Student>? Students { get; set; }

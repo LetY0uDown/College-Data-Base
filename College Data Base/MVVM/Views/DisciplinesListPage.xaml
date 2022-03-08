@@ -22,6 +22,14 @@
                        FontSize="24" FontWeight="Bold"/>
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Key="TeacherTemplate"
+                      DataType="{x:Type model:Teacher}">
+            <Grid>
+                <Label Content="{Binding FullName}"
+                       FontSize="14" FontWeight="DemiBold"/>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid>
@@ -55,6 +63,13 @@
                                  IsEnabled="{Binding IsInputEnabled}"
                                  Margin="3 0 3 0"
                                  Style="{StaticResource PropertyTBStyle}"/>
+
+                        <Label Content="Ведут преподаватели:" Style="{StaticResource PropertyLabelStyle}"/>
+
+                        <ListBox ItemsSource="{Binding SelectedDiscipline.Teachers}"
+                                 ItemTemplate="{StaticResource TeacherTemplate}"
+                                 IsHitTestVisible="False"
+                                 Margin="3 0 3 0" BorderThickness="0"/>
                     </StackPanel>
 
                     <Grid VerticalAlignment="Bottom">

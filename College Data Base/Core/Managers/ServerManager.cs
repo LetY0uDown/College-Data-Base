@@ -1,8 +1,10 @@
-﻿namespace College_Data_Base.Core;
+﻿namespace College_Data_Base.Core.Managers;
 
 public static class ServerManager
 {
     public static string? ConnectionString { get; private set; }
+
+    public static bool IsOffline { get; private set; }
 
     private static string? ServerName;
     private static string? Username;
@@ -30,14 +32,15 @@ public static class ServerManager
         }
         catch
         {
-            new WarningWindow("Ошибка подключения", "Возможно вы ввели неверные данные либо сервер не отвечает").Show();
+            new WarningWindow("Ошибка подключения", "Возможно вы ввели неверные данные либо сервер не отвечает").ShowDialog();
         }        
 
         return result;
     }
 
-    public static void OfflineConnection()
+    public static void ConnectOffline()
     {
-        ConnectionString = $"server=localhost;user=root;password=password;database=CollegeDB.db;";
+        ConnectionString = $"Data Source=CollegeDB.db";
+        IsOffline = true;
     }
 }

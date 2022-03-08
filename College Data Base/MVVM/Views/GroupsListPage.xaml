@@ -21,12 +21,16 @@
             <Grid>
                 <Label Content="{Binding Title}"
                        FontSize="24" FontWeight="Bold"/>
+
+                <Label Content="{Binding Curator.FullName}"
+                       HorizontalAlignment="Right"
+                       FontSize="20" FontWeight="Bold"/>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="StudentTemplate"
                       DataType="{x:Type model:Student}">
-            <Label Content="{Binding MiddleName}"
+            <Label Content="{Binding FullName}"
                    FontSize="14" FontWeight="DemiBold"/>
         </DataTemplate>
     </Page.Resources>
@@ -65,11 +69,11 @@
                         <Label Content="Куратор" Style="{StaticResource PropertyLabelStyle}"/>
                         <ComboBox ItemsSource="{Binding Curators}"
                                   SelectedItem="{Binding SelectedGroup.Curator}"
-                                  DisplayMemberPath="MiddleName"
+                                  DisplayMemberPath="FullName"
                                   IsEnabled="{Binding IsInputEnabled}"
                                   Margin="3 0 3 0"/>
 
-                        <Label Content="Студенты" Style="{StaticResource PropertyLabelStyle}"/>
+                        <Label Content="Студенты группы:" Style="{StaticResource PropertyLabelStyle}"/>
                         <ListBox ItemsSource="{Binding SelectedGroup.Students}"
                                  ItemTemplate="{StaticResource StudentTemplate}"
                                  IsHitTestVisible="False"

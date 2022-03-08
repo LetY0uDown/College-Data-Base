@@ -1,9 +1,10 @@
 ﻿namespace College_Data_Base.MVVM.ViewModels;
 
 using College_Data_Base.Core;
+using College_Data_Base.Core.Managers;
 using System.Windows;
 
-public class LoginViewModel : ViewModel
+public class LoginViewModel : ObservableObject
 {
     public LoginViewModel()
     {
@@ -14,22 +15,18 @@ public class LoginViewModel : ViewModel
             if (ServerManager.TestConnection())
                 StartApplication();
 
-        }, b => ServerName is not null
-                && Username is not null
+        }, b => ServerName is not null 
+                && Username is not null 
                 && Password is not null);
-
-        GoOfflineCommand = new(o =>
-        {
-            ServerManager.OfflineConnection();
-
-            if (ServerManager.TestConnection())
-                StartApplication();
-        });
     }
 
     public Command ConnectCommand { get; init; }
 
-    public Command GoOfflineCommand { get; init; } 
+    public Command GoOfflineCommand { get; init; } = new(o =>
+    {
+        ServerManager.ConnectOffline();
+        StartApplication();
+    });
 
     public Command ExitCommand { get; init; } = new(o =>
         Application.Current.Shutdown());

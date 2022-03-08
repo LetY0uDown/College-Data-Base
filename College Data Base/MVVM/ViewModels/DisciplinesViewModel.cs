@@ -1,6 +1,7 @@
 ﻿namespace College_Data_Base.MVVM.ViewModels;
 
 using College_Data_Base.Core;
+using College_Data_Base.Core.Managers;
 using College_Data_Base.MVVM.Model;
 using System.Collections.ObjectModel;
 
@@ -38,21 +39,6 @@ public class DisciplinesViewModel : ViewModel
 
     public ObservableCollection<Discipline> Disciplines { get; set; } = DataManager.GetCollection<Discipline>();
 
-    public Command AddCommand { get; init; }
-    public Command SaveCommand { get; init; }
-    public Command DeleteCommand { get; init; }
-
-    private bool _isInputEnabled = false;
-    public bool IsInputEnabled
-    {
-        get => _isInputEnabled;
-        private set
-        {
-            _isInputEnabled = value;
-            OnPropertyChanged();
-        }
-    }
-
     private Discipline? _selectedDiscipline;
     public Discipline? SelectedDiscipline
     {
@@ -60,7 +46,12 @@ public class DisciplinesViewModel : ViewModel
         set
         {
             _selectedDiscipline = value;
+
+            if (value is not null)
+                _selectedDiscipline!.Teachers = DataManager.SelectTeachersByDiscipline(value);
+
             IsInputEnabled = value is not null;
+
             OnPropertyChanged();
         }
     }

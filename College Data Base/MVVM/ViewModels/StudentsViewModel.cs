@@ -1,6 +1,7 @@
 ﻿namespace College_Data_Base.MVVM.ViewModels;
 
 using College_Data_Base.Core;
+using College_Data_Base.Core.Managers;
 using College_Data_Base.MVVM.Model;
 using System.Collections.ObjectModel;
 
@@ -38,21 +39,6 @@ public class StudentsViewModel : ViewModel
 
     public ObservableCollection<Student> Students { get; set; } = DataManager.GetCollection<Student>();
     public ObservableCollection<Group> Groups { get; set; } = DataManager.GetCollection<Group>();
-
-    public Command AddCommand { get; init; }
-    public Command SaveCommand { get; init; }
-    public Command DeleteCommand { get; init; }
-
-    private bool _isInputEnabled = false;
-    public bool IsInputEnabled
-    {
-        get => _isInputEnabled;
-        private set
-        {
-            _isInputEnabled = value;
-            OnPropertyChanged();
-        }
-    }
 
     private Student? _selectedStudent;
     public Student? SelectedStudent
