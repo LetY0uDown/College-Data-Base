@@ -1,0 +1,112 @@
+<Page x:Class="College_Data_Base.MVVM.Views.StudentsListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:model="clr-namespace:College_Data_Base.MVVM.Model"
+      xmlns:ViewModel="clr-namespace:College_Data_Base.MVVM.ViewModels"
+      xmlns:converter="clr-namespace:College_Data_Base.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      d:Background="White"
+      Title="StudentsListPage">
+
+    <Page.DataContext>
+        <ViewModel:StudentsViewModel/>
+    </Page.DataContext>
+    
+    <Page.Resources>
+        <converter:GroupTitleConverter x:Key="GroupConverter"/>
+
+        <DataTemplate x:Key="StudentTemplate"
+                      DataType="{x:Type model:Student}">
+            <Grid>
+                <Label Content="{Binding MiddleName}"
+                       FontSize="24" FontWeight="Bold"/>
+
+                <Label Content="{Binding Group.Title, Converter={StaticResource GroupConverter}}"
+                       HorizontalAlignment="Right"
+                       FontSize="18" FontWeight="DemiBold"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Background="Transparent" BorderThickness="0"
+                 HorizontalContentAlignment="Stretch"
+                 ItemTemplate="{StaticResource ResourceKey=StudentTemplate}"
+                 ItemsSource="{Binding Students}"
+                 SelectedItem="{Binding SelectedStudent}"/>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="#FF407590"
+                    BorderThickness="3" CornerRadius="10"
+                    Margin="3">
+
+                <Grid>
+
+                    <StackPanel >
+                        <Label Content="Имя" Style="{StaticResource PropertyLabelStyle}"/>
+
+                        <TextBox Text="{Binding SelectedStudent.FirstName}"
+                                 Margin="3 0 3 0" IsEnabled="{Binding IsInputEnabled}"
+                                 Style="{StaticResource PropertyTBStyle}"/>
+
+                        <Label Content="Фамилия" Style="{StaticResource PropertyLabelStyle}"/>
+
+                        <TextBox Text="{Binding SelectedStudent.MiddleName}"
+                                 Margin="3 0 3 0" IsEnabled="{Binding IsInputEnabled}"
+                                 Style="{StaticResource PropertyTBStyle}"/>
+
+                        <Label Content="Отчество" Style="{StaticResource PropertyLabelStyle}"/>
+
+                        <TextBox Text="{Binding SelectedStudent.LastName}"
+                                 Margin="3 0 3 0" IsEnabled="{Binding IsInputEnabled}"
+                                 Style="{StaticResource PropertyTBStyle}"/>
+
+                        <Label Content="Дата Рождения" Style="{StaticResource PropertyLabelStyle}"/>
+                        <DatePicker SelectedDate="{Binding SelectedStudent.Birthday}"
+                                    IsEnabled="{Binding IsInputEnabled}"/>
+
+                        <Label Content="Группа" Style="{StaticResource PropertyLabelStyle}"/>
+                        <ComboBox Margin="3 0 3 0"
+                                  IsEnabled="{Binding IsInputEnabled}"
+                                  ItemsSource="{Binding Groups}"
+                                  SelectedItem="{Binding SelectedStudent.Group}"
+                                  DisplayMemberPath="Title"/>
+                    </StackPanel>
+
+                    <Grid VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Сохранить" 
+                                Command="{Binding SaveCommand}"
+                                Style="{StaticResource SaveButtonStyle}"/>
+
+                        <Button Content="Удалить" Grid.Column="1"
+                                Command="{Binding DeleteCommand}"
+                                Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+
+                </Grid>
+
+            </Border>
+
+            <Button Content="Добавить" Grid.Row="1"
+                    Command="{Binding AddCommand}"
+                    Style="{StaticResource AddButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Page>

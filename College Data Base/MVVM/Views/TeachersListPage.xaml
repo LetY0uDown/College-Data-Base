@@ -1,0 +1,110 @@
+﻿<Page x:Class="College_Data_Base.MVVM.Views.TeachersListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Converter="clr-namespace:College_Data_Base.Converters"
+      xmlns:ViewModel="clr-namespace:College_Data_Base.MVVM.ViewModels"
+      xmlns:model="clr-namespace:College_Data_Base.MVVM.Model"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      d:Background="White"
+      Title="TeachersListPage">
+
+    <Page.DataContext>
+        <ViewModel:TeachersViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <Converter:SupervisedGroupTitleConverter x:Key="GroupConverter"/>
+
+        <DataTemplate x:Key="TeacherTemplate"
+                      DataType="{x:Type model:Teacher}">
+            <Grid>
+                <Label Content="{Binding MiddleName}"
+                       FontSize="24" FontWeight="Bold"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Background="Transparent" BorderThickness="0"
+                 HorizontalContentAlignment="Stretch"
+                 ItemTemplate="{StaticResource ResourceKey=TeacherTemplate}"
+                 ItemsSource="{Binding Teachers}"
+                 SelectedItem="{Binding SelectedTeacher}"/>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="#FF407590"
+                    BorderThickness="3" CornerRadius="10"
+                    Margin="3">
+
+                <Grid>
+                    <StackPanel Margin="0 0 0 0">
+                            <Label Content="Имя" Style="{StaticResource PropertyLabelStyle}"/>
+
+                            <TextBox Text="{Binding SelectedTeacher.FirstName}"
+                                     Margin="3 0 3 0" IsEnabled="{Binding IsInputEnabled}"
+                                     Style="{StaticResource PropertyTBStyle}"/>
+
+                            <Label Content="Фамилия" Style="{StaticResource PropertyLabelStyle}"/>
+
+                            <TextBox Text="{Binding SelectedTeacher.MiddleName}"
+                                     Margin="3 0 3 0" IsEnabled="{Binding IsInputEnabled}"
+                                     Style="{StaticResource PropertyTBStyle}"/>
+
+                            <Label Content="Отчество" Style="{StaticResource PropertyLabelStyle}"/>
+
+                            <TextBox Text="{Binding SelectedTeacher.LastName}"
+                                     Margin="3 0 3 0" IsEnabled="{Binding IsInputEnabled}"
+                                     Style="{StaticResource PropertyTBStyle}"/>
+
+                            <Label Content="Дата Рождения" Style="{StaticResource PropertyLabelStyle}"/>
+                            <DatePicker SelectedDate="{Binding SelectedTeacher.Birthday}"
+                                        IsEnabled="{Binding IsInputEnabled}"/>
+
+                            <Label Content="Дисциплина" Style="{StaticResource PropertyLabelStyle}"/>
+                            <ComboBox Margin="3 0 3 0" 
+                                      IsEnabled="{Binding IsInputEnabled}"
+                                      ItemsSource="{Binding Disciplines}"
+                                      SelectedItem="{Binding SelectedTeacher.Discipline}"
+                                      DisplayMemberPath="Title"/>
+
+                        <Label Content="{Binding SelectedTeacher.SupervisedGroup, 
+                                                 Converter={StaticResource GroupConverter}}" 
+                               Style="{StaticResource PropertyLabelStyle}"/>
+                    </StackPanel>
+
+                    <Grid VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Сохранить" 
+                                Command="{Binding SaveCommand}"
+                                Style="{StaticResource SaveButtonStyle}"/>
+
+                        <Button Content="Удалить" Grid.Column="1"
+                                Command="{Binding DeleteCommand}"
+                                Style="{StaticResource RemoveButtonStyle}"/>
+                    </Grid>
+                </Grid>
+
+            </Border>
+
+            <Button Content="Добавить" Grid.Row="1"
+                    Command="{Binding AddCommand}"
+                    Style="{StaticResource AddButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,48 @@
+﻿<Window x:Class="College_Data_Base.WarningWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:College_Data_Base"
+        mc:Ignorable="d"
+        Title="WarningWindow" Height="150" Width="300"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" WindowStyle="None"
+        Background="Transparent" AllowsTransparency="True">
+    <Border CornerRadius="0 0 10 10"
+            Background="White"
+            BorderBrush="#FFFF3030"
+            BorderThickness="3">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="3.5*"/>
+            </Grid.RowDefinitions>
+
+            <Canvas Background="#25FF0000"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="32"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" Content="✕" 
+                        Click="Button_Click"
+                        Style="{StaticResource WarWinExitButtonStyle}"/>
+
+                <Label x:Name="TitleLabel"
+                       HorizontalAlignment="Left"
+                       FontSize="16" FontWeight="DemiBold"/>
+            </Grid>
+            
+            <TextBlock x:Name="TextTB" Grid.Row="1"
+                       VerticalAlignment="Center"
+                       FontSize="18" FontWeight="Medium"
+                       TextAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
+        
+    </Border>
+</Window>
